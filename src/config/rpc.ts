@@ -7,11 +7,6 @@ export interface RpcConfig {
 
 export const DEFAULT_RPC_ENDPOINTS: RpcConfig[] = [
   {
-    endpoint: 'https://api.mainnet-beta.solana.com',
-    name: 'Solana Mainnet (Official)',
-    network: 'mainnet'
-  },
-  {
     endpoint: 'https://go.getblock.us/86aac42ad4484f3c813079afc201451c',
     name: 'GetBlock Mainnet',
     network: 'mainnet'
@@ -29,6 +24,11 @@ export const DEFAULT_RPC_ENDPOINTS: RpcConfig[] = [
   {
     endpoint: 'https://solana-api.projectserum.com',
     name: 'Project Serum',
+    network: 'mainnet'
+  },
+  {
+    endpoint: 'https://api.mainnet-beta.solana.com',
+    name: 'Solana Mainnet (Official)',
     network: 'mainnet'
   },
   {
