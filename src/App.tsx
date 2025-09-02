@@ -91,7 +91,7 @@ const CustomWalletButton: React.FC = () => {
                             />
                         )}
                         <span style={{ marginLeft: '8px' }}>
-                            {wallet?.adapter.name || 'Wallet'}
+                            {publicKey ? `${publicKey.toString().slice(0, 4)}...${publicKey.toString().slice(-4)}` : 'Wallet'}
                         </span>
                     </>
                 ) : (
