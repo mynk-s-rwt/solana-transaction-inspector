@@ -60,7 +60,7 @@
 }
 
 .clear-button,
-.export-button,
+.copy-button,
 .close-button {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -78,7 +78,7 @@
   color: #EF4444;
 }
 
-.export-button:hover {
+.copy-button:hover {
   background: rgba(16, 185, 129, 0.15);
   border-color: rgba(16, 185, 129, 0.3);
   color: #10B981;

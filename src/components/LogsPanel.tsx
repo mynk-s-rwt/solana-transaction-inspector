@@ -39,17 +39,9 @@ const LogsPanel: React.FC<LogsPanelProps> = ({ onClose }) => {
     setLogs([]);
   };
 
-  const exportLogs = () => {
+  const copyLogs = () => {
     const dataStr = logger.exportLogs();
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `solana-transaction-logs-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    navigator.clipboard.writeText(dataStr);
   };
 
   const getLogIcon = (level: LogLevel): string => {
@@ -112,8 +104,8 @@ const LogsPanel: React.FC<LogsPanelProps> = ({ onClose }) => {
             🗑️
           </button>
           
-          <button onClick={exportLogs} className="export-button" title="Export logs">
-            💾
+          <button onClick={copyLogs} className="copy-button" title="Copy logs">
+            📋
           </button>
           
           <button onClick={onClose} className="close-button" title="Close logs">
