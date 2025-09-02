@@ -15,6 +15,7 @@ import {
 } from '@solana/wallet-adapter-react-ui';
 import CustomWalletModal from './components/CustomWalletModal';
 import WalletOptionsModal from './components/WalletOptionsModal';
+import solanaLogo from '/solana-logo.svg';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
 import './App.css';
@@ -160,7 +161,7 @@ function App() {
                     <div className="App">
                         <header className="App-header">
                             <div className="header-left">
-                                <img src="/solana-logo.svg" alt="Solana" className="solana-logo" />
+                                <img src={solanaLogo} alt="Solana" className="solana-logo" />
                                 <div className="header-title">
                                     <h1>Transaction Inspector</h1>
                                     <span className="header-subtitle">Simulate, Sign & Send</span>

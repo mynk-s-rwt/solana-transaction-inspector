@@ -1,6 +1,15 @@
-# React + TypeScript + Vite
+# Solana Transaction Inspector
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application for inspecting and simulating Solana transactions with wallet integration.
+
+🌐 **Live Demo**: https://mynk-s-rwt.github.io/solana-transaction-inspector/
+
+## Features
+
+- Wallet connection and management
+- Transaction simulation and inspection
+- Real-time transaction data analysis
+- Built with React + TypeScript + Vite
 
 Currently, two official plugins are available:
 
