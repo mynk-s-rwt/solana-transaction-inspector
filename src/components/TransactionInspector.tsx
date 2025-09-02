@@ -76,7 +76,7 @@ const TransactionInspector: React.FC = () => {
                 endpoint: connection.rpcEndpoint
             });
 
-            const simulationResult = await connection.simulateTransaction(transaction);
+            const simulationResult = await connection.simulateTransaction(transaction as any);
             
             logger.info('📊 Simulation completed', {
                 success: !simulationResult.value.err,

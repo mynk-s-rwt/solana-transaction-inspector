@@ -10,7 +10,10 @@
       "Bash(mkdir:*)",
       "Bash(pnpm run dev:*)",
       "Bash(pnpm list:*)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "Bash(npx pnpm build:*)",
+      "Bash(grep:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

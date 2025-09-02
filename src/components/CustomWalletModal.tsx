@@ -17,7 +17,7 @@ const CustomWalletModal: React.FC<CustomWalletModalProps> = ({ visible, onClose 
   const handleWalletSelect = async (walletName: string) => {
     try {
       console.log('Attempting to select wallet:', walletName);
-      select(walletName);
+      select(walletName as any);
       onClose();
       
       // Give the wallet time to be selected, then attempt connection
