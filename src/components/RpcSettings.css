@@ -1,0 +1,329 @@
+.rpc-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.rpc-settings-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, rgba(26, 27, 35, 0.98) 0%, rgba(13, 14, 18, 0.98) 100%);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.6),
+    0 0 100px rgba(67, 56, 202, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  z-index: 1001;
+  max-width: 600px;
+  width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rpc-settings-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+  }
+}
+
+.rpc-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2rem 0 2rem;
+}
+
+.rpc-settings-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FFFFFF, #A1A1AA);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rpc-settings-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #9CA3AF;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rpc-settings-close:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+}
+
+.rpc-settings-content {
+  padding: 1.5rem 2rem 2rem 2rem;
+  overflow-y: auto;
+  max-height: calc(80vh - 80px);
+}
+
+.rpc-settings-description {
+  margin: 0 0 1.5rem 0;
+  color: #9CA3AF;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.rpc-endpoints-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rpc-endpoint-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.rpc-endpoint-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: left 0.5s ease;
+}
+
+.rpc-endpoint-item:hover::before {
+  left: 100%;
+}
+
+.rpc-endpoint-item:hover {
+  background: rgba(67, 56, 202, 0.1);
+  border-color: rgba(67, 56, 202, 0.3);
+  transform: translateY(-1px);
+}
+
+.rpc-endpoint-item.selected {
+  background: rgba(67, 56, 202, 0.15);
+  border-color: rgba(67, 56, 202, 0.4);
+  box-shadow: 0 0 20px rgba(67, 56, 202, 0.2);
+}
+
+.rpc-endpoint-item.custom:hover,
+.rpc-endpoint-item.custom.selected {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.rpc-endpoint-info {
+  flex: 1;
+}
+
+.rpc-endpoint-name {
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 0.25rem;
+}
+
+.rpc-endpoint-url {
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.rpc-network-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rpc-network-badge.mainnet {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22C55E;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.rpc-network-badge.devnet {
+  background: rgba(245, 158, 11, 0.15);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.rpc-network-badge.testnet {
+  background: rgba(168, 85, 247, 0.15);
+  color: #A855F7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.rpc-network-badge.custom {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.custom-rpc-input {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.custom-rpc-field {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.custom-rpc-field:focus {
+  outline: none;
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+}
+
+.custom-rpc-field::placeholder {
+  color: #52525B;
+}
+
+.custom-rpc-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.custom-rpc-save,
+.custom-rpc-cancel {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.custom-rpc-save {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.custom-rpc-save:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.25);
+  transform: translateY(-1px);
+}
+
+.custom-rpc-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.custom-rpc-cancel {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9CA3AF;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-rpc-cancel:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.rpc-settings-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.current-endpoint {
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  word-break: break-all;
+}
+
+.current-endpoint strong {
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .rpc-settings-modal {
+    margin: 1rem;
+    width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+  }
+  
+  .rpc-settings-header,
+  .rpc-settings-content {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .rpc-endpoint-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .rpc-network-badge {
+    align-self: flex-end;
+  }
+}

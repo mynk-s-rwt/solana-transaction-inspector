@@ -1,0 +1,137 @@
+.wallet-options-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.wallet-options-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #1a1b23;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90vw;
+  z-index: 10000;
+  color: white;
+  border: 1px solid #2d2e36;
+}
+
+.wallet-options-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #2d2e36;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wallet-options-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.wallet-options-close {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.wallet-options-close:hover {
+  color: white;
+}
+
+.wallet-options-content {
+  padding: 20px 24px;
+}
+
+.wallet-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 5px;
+  border-radius: 12px;
+}
+
+.wallet-info-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.wallet-info-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.wallet-info-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.wallet-info-address {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'JetBrains Mono', 'Monaco', 'Consolas', monospace;
+  letter-spacing: 0.5px;
+}
+
+.wallet-options-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wallet-option-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.wallet-option-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.wallet-option-button.disconnect {
+  border-color: rgba(244, 67, 54, 0.3);
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.wallet-option-button.disconnect:hover {
+  background: rgba(244, 67, 54, 0.15);
+  border-color: rgba(244, 67, 54, 0.5);
+}
+
+.wallet-option-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.wallet-option-text {
+  font-weight: 500;
+}
