@@ -14,7 +14,8 @@
       "Bash(npx pnpm build:*)",
       "Bash(grep:*)",
       "Bash(rm:*)",
-      "Bash(pnpm run:*)"
+      "Bash(pnpm run:*)",
+      "WebFetch(domain:solscan.io)"
     ],
     "deny": [],
     "ask": []

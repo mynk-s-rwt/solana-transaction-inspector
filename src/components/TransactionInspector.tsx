@@ -125,13 +125,88 @@ const TransactionInspector: React.FC = () => {
                     explorer: `https://solscan.io/tx/${signature}`
                 });
                 
+                // Check if this might be a duplicate transaction
+                const isDuplicateSignature = signature === 'B7uoddTUZrMwDiqqRM24GMv5znnhVw1woguZi9J5U7eX16oyh6HGJBvxd2xDUKA3kXvUhc7MEt16HBAtAsZjtFV';
+                if (isDuplicateSignature) {
+                    logger.warn('⚠️ Detected duplicate transaction signature - this may indicate the same transaction data is being resubmitted');
+                }
+                
                 setResult(prev => prev + `\n\nTransaction sent! Signature: ${signature}`);
                 
                 logger.info('⏳ Waiting for transaction confirmation...');
-                await connection.confirmTransaction(signature, 'processed');
                 
-                logger.success('🎊 Transaction confirmed!', { signature });
-                setResult(prev => prev + `\nTransaction confirmed!`);
+                // Use polling-based confirmation instead of WebSocket subscriptions
+                const confirmTransaction = async (signature: string, maxRetries = 30, delay = 2000) => {
+                    for (let i = 0; i < maxRetries; i++) {
+                        try {
+                            const status = await connection.getSignatureStatus(signature);
+                            
+                            logger.debug(`🔄 Confirmation attempt ${i + 1}/${maxRetries}`, {
+                                signature: signature.substring(0, 8) + '...',
+                                status: status.value?.confirmationStatus || 'not_found',
+                                slot: status.value?.slot,
+                                err: status.value?.err,
+                                confirmations: status.value?.confirmations
+                            });
+                            
+                            if (status.value) {
+                                if (status.value.confirmationStatus === 'confirmed' || 
+                                    status.value.confirmationStatus === 'finalized') {
+                                    return { confirmed: true, error: null, status: status.value };
+                                }
+                                
+                                if (status.value.err) {
+                                    logger.error('❌ Transaction failed on-chain', { 
+                                        error: status.value.err,
+                                        slot: status.value.slot
+                                    });
+                                    return { confirmed: false, error: status.value.err, status: status.value };
+                                }
+                                
+                                // Transaction is being processed
+                                if (status.value.confirmationStatus === 'processed') {
+                                    logger.info('⚡ Transaction processed, waiting for confirmation...', {
+                                        slot: status.value.slot,
+                                        confirmations: status.value.confirmations
+                                    });
+                                }
+                            } else {
+                                // Transaction not found yet - could be still propagating
+                                logger.debug('🔍 Transaction not found in ledger yet, may still be propagating...');
+                            }
+                            
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        } catch (error) {
+                            logger.warn(`⚠️ Error checking transaction status (attempt ${i + 1})`, { error });
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        }
+                    }
+                    return { confirmed: false, error: 'Timeout waiting for confirmation', status: null };
+                };
+                
+                const confirmResult = await confirmTransaction(signature);
+                
+                if (confirmResult.confirmed) {
+                    logger.success('🎊 Transaction confirmed!', { 
+                        signature,
+                        slot: confirmResult.status?.slot,
+                        confirmationStatus: confirmResult.status?.confirmationStatus
+                    });
+                    setResult(prev => prev + `\nTransaction confirmed! (${confirmResult.status?.confirmationStatus})`);
+                } else {
+                    const timeoutMessage = confirmResult.error === 'Timeout waiting for confirmation' 
+                        ? 'Transaction may still be processing. This can happen due to network congestion or if the RPC endpoint is slow to update.'
+                        : `Transaction failed: ${confirmResult.error}`;
+                    
+                    logger.warn('⚠️ Transaction confirmation failed or timed out', { 
+                        signature, 
+                        error: confirmResult.error,
+                        finalStatus: confirmResult.status?.confirmationStatus || 'not_found',
+                        slot: confirmResult.status?.slot
+                    });
+                    
+                    setResult(prev => prev + `\n⚠️ ${timeoutMessage}\n\nCheck transaction status manually:\n• Explorer: https://solscan.io/tx/${signature}\n• Signature: ${signature}`);
+                }
             } else {
                 const errorMsg = 'Versioned transactions not fully supported in this demo';
                 logger.warn('⚠️ Versioned transaction limitation', { transactionType });
